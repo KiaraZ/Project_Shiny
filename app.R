@@ -7,15 +7,13 @@ library(dplyr)
 # Load data ----
 data <- read.csv("data/newtraindata01.csv")
 dataNew <- read.csv("data/newtraindata.csv")
-# Source helper functions -----
-source("helpers.R")
 
 # User interface ----
 # Define UI for dataset viewer app ----
 ui <- fluidPage(
   
   # App title ----
-  titlePanel("Shiny Text"),
+  titlePanel("Dataset"),
   
   # Sidebar layout with a input and output definitions ----
   sidebarLayout(
@@ -29,10 +27,11 @@ ui <- fluidPage(
                   choices = c("data", "new data after processing")),
       
       # Input: Numeric entry for number of obs to view ----
-      SelectInput(inputId = "variable",
+      selectInput(inputId = "variable",
                    label = "Variable: ",
                    multiple = TRUE,
-                   choices = colnames(input$dataset),
+                   choices = colnames(data),
+                   selected = colnames(data)
                    )
     ),
     
@@ -57,7 +56,7 @@ server <- function(input, output) {
   })
   
   output$view <- renderTable({
-    select(datasetInput, input$variable)
+    select(datasetInput(), input$variable)
   })
   
 }
@@ -65,3 +64,4 @@ server <- function(input, output) {
 
 # Run app ----
 shinyApp(ui, server)
+
