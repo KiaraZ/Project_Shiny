@@ -32,7 +32,12 @@ ui <- fluidPage(
                    multiple = TRUE,
                    choices = colnames(data),
                    selected = colnames(data)
-                   )
+                   ),
+      
+      numericInput(inputId = "obs",
+                   label = "Number of observations to view (Maximum to 19158):",
+                   value = 10,
+                   max = 19158)
     ),
     
     # Main panel for displaying outputs ----
@@ -54,9 +59,9 @@ server <- function(input, output) {
            "new data after processing" = dataNew
            )
   })
-  
+  # Input: Numeric entry for number of obs to view ----
   output$view <- renderTable({
-    select(datasetInput(), input$variable)
+    head(select(datasetInput(), input$variable), n = input$obs)
   })
   
 }
