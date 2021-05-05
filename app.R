@@ -31,7 +31,6 @@ ui <- fluidPage(
       # Input: Numeric entry for number of obs to view ----
       varSelectInput(inputId = "variable",
                    label = "Variable: ",
-                   choices = colnames(data),
                    multiple = TRUE
                    )
     ),
